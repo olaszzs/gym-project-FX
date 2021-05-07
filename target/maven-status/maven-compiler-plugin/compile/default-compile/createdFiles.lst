@@ -1,1 +1,3 @@
-App.class
+application\AppController.class
+application\Main.class
+application\App.class
