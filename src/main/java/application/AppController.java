@@ -5,46 +5,57 @@ import Day.DayRepo;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.fxml.Initializable;
 
 
 import lombok.SneakyThrows;
 import org.json.simple.JSONArray;
 import org.tinylog.Logger;
 
-import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
 public class AppController {
 
     @FXML
     private GridPane grdpn;
+    @FXML
     private TextField dateField;
+    @FXML
     private TextField wrkField;
+    @FXML
     private TextField weightField;
+    @FXML
     private CheckBox creatineCheckBox;
+    @FXML
     private CheckBox stretchCheckBox;
+    @FXML
     private CheckBox proteinCheckBox;
+    @FXML
     private CheckBox cVitaminCheckBox;
+    @FXML
     private CheckBox jumboCheckBox;
-    private Spinner sleepSpinner;
+    @FXML
+    private Spinner<Integer> sleepSpinner;
+    SpinnerValueFactory<Integer> svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,24,1);
 
-
+    public void initialize(URL url, ResourceBundle rb){
+        sleepSpinner.setValueFactory(svf);
+    }
 
     @FXML
     private void onQuit(ActionEvent event){
-        Logger.info("Terminating");
         Platform.exit();
     }
 
     @FXML
     private void onInfo(ActionEvent event){
+        sleepSpinner.setValueFactory(svf);
         Alert about = new Alert(Alert.AlertType.INFORMATION);
         about.setTitle("Info");
         about.setHeaderText("Edzős program");
@@ -63,6 +74,7 @@ public class AppController {
         final var days = new DayRepo().getAll();
 
         //TODO több kattintásra több értéket tudjak beírni, így egy nap tudjam megadni az előzőt is akár
+
         JSONArray arr = new JSONArray();
         arr.addAll(days);
 
@@ -88,7 +100,13 @@ public class AppController {
             }
         }
         else{
-            JOptionPane.showMessageDialog(null, "Hibás dátum", "Hiba", JOptionPane.ERROR_MESSAGE);
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Hiba");
+            error.setHeaderText("Edzős program");
+            error.setContentText("""
+                    Hibás dátum
+                    Várt formátum: hó.nap""");
+            error.showAndWait();
         }
     }
 

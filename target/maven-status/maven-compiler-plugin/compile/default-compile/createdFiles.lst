@@ -1,3 +1,6 @@
 application\AppController.class
 application\Main.class
+Day\Day.class
+Day\DayRepo$1.class
+Day\DayRepo.class
 application\App.class

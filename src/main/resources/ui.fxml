@@ -35,7 +35,7 @@
                 <Label fx:id="dateLabel" text="Dátum(hó/nap)" GridPane.rowIndex="1" />
                 <Label fx:id="wrkLabel" text="Izomcsoport" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Label fx:id="weightLabel" text="Tömeg" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <TextField GridPane.rowIndex="2" />
+                <TextField fx:id="dateField" GridPane.rowIndex="2" />
                 <TextField fx:id="wrkField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TextField fx:id="weightField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                 <CheckBox fx:id="stretchCheckBox" mnemonicParsing="false" text="Nyújtás" GridPane.columnIndex="4" GridPane.rowIndex="2" />
@@ -45,7 +45,7 @@
                 <CheckBox fx:id="creatineCheckBox" mnemonicParsing="false" text="Kreatin" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                 <CheckBox fx:id="jumboCheckBox" mnemonicParsing="false" text="Jumbo" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                 <CheckBox fx:id="proteinCheckBox" mnemonicParsing="false" text="Fehérje" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-            <CheckBox mnemonicParsing="false" onAction="#cVitaminCheckBox" text="C-Vitamin" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+            <CheckBox fx:id="cVitaminCheckBox" mnemonicParsing="false" text="C-Vitamin" GridPane.columnIndex="4" GridPane.rowIndex="6" />
             <Button mnemonicParsing="false" onAction="#onSave" prefHeight="25.0" prefWidth="200.0" text="Mentés" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Spinner fx:id="sleepSpinner" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label text="Alvás" GridPane.columnIndex="3" GridPane.rowIndex="1" />
