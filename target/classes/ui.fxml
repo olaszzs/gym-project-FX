@@ -47,9 +47,9 @@
                 <CheckBox fx:id="proteinCheckBox" mnemonicParsing="false" text="Fehérje" GridPane.columnIndex="4" GridPane.rowIndex="5" />
             <CheckBox fx:id="cVitaminCheckBox" mnemonicParsing="false" text="C-Vitamin" GridPane.columnIndex="4" GridPane.rowIndex="6" />
             <Button mnemonicParsing="false" onAction="#onSave" prefHeight="25.0" prefWidth="200.0" text="Mentés" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <Spinner fx:id="sleepSpinner" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Spinner fx:id="sleepSpinner" editable="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label text="Alvás" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Lemaradás" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#lessTrained" prefHeight="25.0" prefWidth="200.0" text="Lemaradás" GridPane.rowIndex="4" />
             <Button mnemonicParsing="false" onAction="#avgWeight" prefWidth="200.0" text="Átlag testtömeg" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             </children>
         </GridPane>

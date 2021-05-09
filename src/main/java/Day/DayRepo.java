@@ -17,18 +17,23 @@ public class DayRepo {
         loadDays(DayRepo.class.getClassLoader().getResourceAsStream("out.json"));
     }
 
-    private void loadDays(InputStream is) throws IOException{
+    public void loadDays(InputStream is) throws IOException{
         days = OBJECT_MAPPER.readValue(is, new TypeReference<>() {
         });
     }
 
-    public List<Day> getAll() { return days; }
-
-    public static void main(String[] args) throws  IOException{
-        final var repo = new DayRepo();
-        final var days = repo.getAll();
+    public List<Day> getAll() {
+        return days;
     }
 
+    public static void main(String[] args) throws  IOException{
+        //final var repo = new DayRepo();
+        //final var days = repo.getAll();
+    }
+
+    /**
+     * @return modified toString() to this class.
+     */
     @Override
     public String toString() {
         return "DayRepo{" +
