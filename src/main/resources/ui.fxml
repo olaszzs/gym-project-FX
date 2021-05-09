@@ -49,7 +49,7 @@
             <Button mnemonicParsing="false" onAction="#onSave" prefHeight="25.0" prefWidth="200.0" text="Mentés" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Spinner fx:id="sleepSpinner" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label text="Alvás" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Lemaradás" GridPane.rowIndex="4" />
             </children>
         </GridPane>
     </children>

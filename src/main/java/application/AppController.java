@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class AppController {
+public class AppController implements Initializable{
 
     @FXML
     private GridPane grdpn;
@@ -42,8 +42,10 @@ public class AppController {
     private CheckBox jumboCheckBox;
     @FXML
     private Spinner<Integer> sleepSpinner;
-    SpinnerValueFactory<Integer> svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,24,1);
+    SpinnerValueFactory<Integer> svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,24,0);
 
+    @FXML
+    @Override
     public void initialize(URL url, ResourceBundle rb){
         sleepSpinner.setValueFactory(svf);
     }
@@ -80,9 +82,8 @@ public class AppController {
 
         //date format error
         if(dateField.getText().length() <= 6 && dateField.getText().length() >= 5){
-            try(FileWriter asd = new FileWriter("src/main/resources/asd.json", false)){
+            try(FileWriter file = new FileWriter("src/main/resources/out.json", false)){
 
-                FileWriter file = new FileWriter("src/main/resources/out.json", false);
                 Day nap = new Day(dateField.getText(), wrkField.getText(), Integer.parseInt(weightField.getText()),
                         creatineCheckBox.isSelected(), stretchCheckBox.isSelected(), jumboCheckBox.isSelected(),
                         proteinCheckBox.isSelected(), cVitaminCheckBox.isSelected(), (Integer) sleepSpinner.getValue());
