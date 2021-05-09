@@ -50,6 +50,7 @@
             <Spinner fx:id="sleepSpinner" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label text="Alvás" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Lemaradás" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#avgWeight" prefWidth="200.0" text="Átlag testtömeg" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             </children>
         </GridPane>
     </children>

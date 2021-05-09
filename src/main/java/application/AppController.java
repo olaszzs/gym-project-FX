@@ -6,10 +6,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.fxml.Initializable;
 
 
+import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import org.json.simple.JSONArray;
 import org.tinylog.Logger;
@@ -67,6 +69,8 @@ public class AppController implements Initializable{
             Created by: Zsolt Olasz
             2021.02.25
             """.formatted(System.getProperty("java.version"), System.getProperty("java.vendor"), System.getProperty("javafx.version")));
+        Stage stage = (Stage) about.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("/info.png"));
         about.showAndWait();
     }
 
@@ -103,12 +107,34 @@ public class AppController implements Initializable{
         else{
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setTitle("Hiba");
-            error.setHeaderText("Edzős program");
+            error.setHeaderText(null);
             error.setContentText("""
                     Hibás dátum
                     Várt formátum: hó.nap""");
+            Stage stage = (Stage) error.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/error.png"));
             error.showAndWait();
         }
+    }
+    @FXML
+    public void avgWeight() throws IOException {
+        final var days = new DayRepo().getAll();
+
+        final var result = days.stream()
+                .mapToDouble(day -> day.getWeight())
+                .average()
+                .getAsDouble();
+
+        Alert avgW = new Alert(Alert.AlertType.INFORMATION);
+        avgW.setTitle("Átlag testtömeg");
+        avgW.setHeaderText(null);
+        avgW.setContentText("""
+                            Az átlag testtömeged az eddig vezetett napok alapján: 
+                            """+result+" kg");
+        Stage stage = (Stage) avgW.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("/biceps.png"));
+        avgW.showAndWait();
+
     }
 
 }
