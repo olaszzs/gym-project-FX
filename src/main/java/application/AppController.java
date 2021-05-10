@@ -19,10 +19,13 @@ import org.tinylog.Logger;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
 public class AppController implements Initializable{
+
+    List<Day> days = new DayRepo().getAll();
 
     @FXML
     private GridPane grdpn;
@@ -45,6 +48,9 @@ public class AppController implements Initializable{
     @FXML
     private Spinner<Integer> sleepSpinner;
     SpinnerValueFactory<Integer> svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,24,0);
+
+    public AppController() throws IOException {
+    }
 
     /**
      * Overriding initialize method.
@@ -94,9 +100,7 @@ public class AppController implements Initializable{
     @FXML
     @SneakyThrows
     private void onSave(ActionEvent event) {
-        final var days = new DayRepo().getAll();
-        for(int i=0; i<days.size(); i++)
-            System.out.println(days.get(i));
+        //final var days = new DayRepo().getAll();
 
         //TODO több kattintásra több értéket tudjak beírni, így egy nap tudjam megadni az előzőt is akár
         JSONArray arr = new JSONArray();
@@ -141,7 +145,6 @@ public class AppController implements Initializable{
      */
     @FXML
     public void avgWeight() throws IOException {
-        final var days = new DayRepo().getAll();
 
         if(days.isEmpty()){
             Alert error = new Alert(Alert.AlertType.ERROR);
