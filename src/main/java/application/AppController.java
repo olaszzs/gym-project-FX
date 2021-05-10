@@ -46,19 +46,30 @@ public class AppController implements Initializable{
     private Spinner<Integer> sleepSpinner;
     SpinnerValueFactory<Integer> svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,24,0);
 
+    /**
+     * Overriding initialize method.
+     * @param url The url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param rb The rb used to localize the root object, or null if the root object was not localized.
+     */
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb){
         sleepSpinner.setValueFactory(svf);
     }
 
+    /**
+     * Method for quit button.
+     */
     @FXML
-    private void onQuit(ActionEvent event){
+    private void onQuit(){
         Platform.exit();
     }
-    
+
+    /**
+     * Method for info button.
+     */
     @FXML
-    private void onInfo(ActionEvent event){
+    private void onInfo(){
         sleepSpinner.setValueFactory(svf);
         Alert about = new Alert(Alert.AlertType.INFORMATION);
         about.setTitle("Info");
@@ -75,9 +86,14 @@ public class AppController implements Initializable{
     }
 
 
+    /**
+     * Method for save button.
+     * Reads days from our json file and adds a new line to that if everything is fine.
+     * There is an error handling, if the date format is not good, the program gives and error message.
+     */
     @FXML
     @SneakyThrows
-    private void onSave() {
+    private void onSave(ActionEvent event) {
         final var days = new DayRepo().getAll();
         for(int i=0; i<days.size(); i++)
             System.out.println(days.get(i));
@@ -119,14 +135,15 @@ public class AppController implements Initializable{
         }
     }
 
+    /**
+     * Method for average weight button.
+     * There is an error handling, if there is no data in the file, give an error message instead of crashing the program.
+     * But if there is data in the file, perform the task.
+     */
     @FXML
     public void avgWeight() throws IOException {
         final var days = new DayRepo().getAll();
 
-        /**
-         * Error handling, if there is no data in the file, give an error message instead of crashing the program.
-         * But if there is data in the file, perform the task.
-         */
         if(days.isEmpty()){
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setTitle("Hiba");
