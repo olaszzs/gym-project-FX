@@ -104,7 +104,7 @@ public class AppController implements Initializable{
 
         //date format error
         if(dateField.getText().length() <= 6 && dateField.getText().length() >= 5){
-            try(FileWriter file = new FileWriter("src/main/resources/out.json", false)){
+            try(FileWriter file = new FileWriter("src/main/resources/days.json", false)){
 
                 Day nap = new Day(dateField.getText(), wrkField.getText(), Integer.parseInt(weightField.getText()),
                         creatineCheckBox.isSelected(), stretchCheckBox.isSelected(), jumboCheckBox.isSelected(),
@@ -113,7 +113,6 @@ public class AppController implements Initializable{
                 //days.add(nap);
 
                 arr.add(nap);
-                System.out.println(arr.toJSONString());
                 file.write(arr.toJSONString()+" \n");
 
                 file.flush();

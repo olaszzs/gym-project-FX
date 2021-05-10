@@ -14,7 +14,7 @@ public class DayRepo {
     private List<Day> days;
 
     public DayRepo() throws IOException{
-        loadDays(DayRepo.class.getClassLoader().getResourceAsStream("out.json"));
+        loadDays(DayRepo.class.getClassLoader().getResourceAsStream("days.json"));
     }
 
     public void loadDays(InputStream is) throws IOException{
