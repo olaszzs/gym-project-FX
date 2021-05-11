@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LoginController">
    <children>
-      <TextField fx:id="unField" layoutX="120.0" layoutY="113.0" />
+      <TextField fx:id="unField" layoutX="120.0" layoutY="113.0" onKeyPressed="#onEnter" />
       <Label alignment="CENTER" layoutY="14.0" prefHeight="31.0" prefWidth="380.0" text="LOGIN" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
@@ -27,8 +27,8 @@
          </font>
       </Label>
       <Separator layoutX="15.0" layoutY="48.0" prefWidth="350.0" />
+      <PasswordField fx:id="pwField" layoutX="120.0" layoutY="145.0" onKeyPressed="#onEnter" />
       <Button fx:id="loginButton" layoutX="200.0" layoutY="180.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="25.0" prefWidth="69.0" text="Login" />
       <Separator layoutX="15.0" layoutY="264.0" prefWidth="350.0" />
-      <PasswordField fx:id="pwField" layoutX="120.0" layoutY="145.0" />
    </children>
 </AnchorPane>

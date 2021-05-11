@@ -11,7 +11,7 @@ import java.util.List;
 public class DayRepo {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
 
-    private List<Day> days;
+    public List<Day> days;
 
     public DayRepo() throws IOException{
         loadDays(DayRepo.class.getClassLoader().getResourceAsStream("days.json"));
@@ -26,9 +26,8 @@ public class DayRepo {
         return days;
     }
 
-    public static void main(String[] args) throws  IOException{
-        //final var repo = new DayRepo();
-        //final var days = repo.getAll();
+    public static void main(String[] args){
+
     }
 
     /**

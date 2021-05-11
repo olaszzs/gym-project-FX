@@ -1,12 +1,13 @@
 package login;
 
-import application.App;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,10 +21,20 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
-    @FXML
-    private void onLogin() throws IOException {
+    /**
+     * Method for log in, open the main stage or handle errors with an error message.
+     * @throws IOException we need this because FXMLLoader.load might give an exception
+     */
+    private void login() throws IOException {
         if(unField.getText().equals("user") && pwField.getText().equals("pass")) {
-            System.out.println("Login success");
+            Stage mainStage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/ui.fxml"));
+            mainStage.setTitle("Edzős program");
+            Scene scene = new Scene(root);
+            mainStage.setScene(scene);
+            mainStage.setResizable(false);
+            mainStage.getIcons().add(new Image("/gym.png"));
+            mainStage.show();
         }
         else{
             Alert loginError = new Alert(Alert.AlertType.ERROR);
@@ -34,6 +45,26 @@ public class LoginController {
             stage.getIcons().add(new Image("/error.png"));
             loginError.showAndWait();
         }
+    }
 
+    /**
+     * Method for run login method on click Login button
+     * @throws IOException we might have some exception because of the login method
+     */
+    @FXML
+    private void onLogin() throws IOException {
+        login();
+
+    }
+
+    /**
+     * Method for run login method on press ENTER
+     * @param e is an event we use to see which key was pressed
+     * @throws IOException we might have some exception because of the login method
+     */
+    @FXML
+    private void onEnter(KeyEvent e) throws IOException {
+        if(e.getCode() == KeyCode.ENTER)
+            login();
     }
 }

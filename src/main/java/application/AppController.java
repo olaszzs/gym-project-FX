@@ -19,8 +19,9 @@ import org.tinylog.Logger;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 public class AppController implements Initializable{
@@ -100,7 +101,7 @@ public class AppController implements Initializable{
     @FXML
     @SneakyThrows
     private void onSave(ActionEvent event) {
-        //final var days = new DayRepo().getAll();
+        final var days = new DayRepo().getAll();
 
         //TODO több kattintásra több értéket tudjak beírni, így egy nap tudjam megadni az előzőt is akár
         JSONArray arr = new JSONArray();
@@ -175,14 +176,23 @@ public class AppController implements Initializable{
 
     @FXML
     public void lessTrained() throws  IOException{
-        final var days = new DayRepo().getAll();
-
         String tmp;
-        /*final var result = days.stream()
-                .map(day -> day.getWrk())
-                .forEach();
+        int hát = 0;
+        int váll = 0;
+        int kar = 0;
+        int láb = 0;
+        int mell = 0;
+        List<Day> dayList = new ArrayList<Day>();
+        /*days.stream()
+                .map(Day::getWrk)
+                .sorted()
+                .forEach(System.out::println);*/
 
-        System.out.println(result);*/
+        Map<String, Long> countMap = days.stream()
+                .map(Day::getWrk)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+
     }
 
 }

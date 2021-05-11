@@ -7,5 +7,12 @@
 ,{"date":"05.09","wrk":"váll","weight":"76","creatine":"false","stretch":"false","jumbo":"false","protein":"false","cvitamin":"false","sleep":"6"}
 ,{"date":"05.09","wrk":"váll","weight":"80","creatine":"true","stretch":"false","jumbo":"true","protein":"false","cvitamin":"true","sleep":"7"}
 ,{"date":"05.10","wrk":"hát","weight":"200","creatine":"false","stretch":"false","jumbo":"true","protein":"false","cvitamin":"false","sleep":"4"}
-,{"date":"05.10","wrk":"hát","weight":"10","creatine":"false","stretch":"false","jumbo":"false","protein":"true","cvitamin":"true","sleep":"7"}
+,{"date":"05.10","wrk":"mell","weight":"200","creatine":"false","stretch":"false","jumbo":"true","protein":"false","cvitamin":"false","sleep":"4"}
+,{"date":"05.10","wrk":"mell","weight":"200","creatine":"false","stretch":"false","jumbo":"true","protein":"false","cvitamin":"false","sleep":"4"}
+,{"date":"05.10","wrk":"kar","weight":"200","creatine":"false","stretch":"false","jumbo":"true","protein":"false","cvitamin":"false","sleep":"4"}
+,{"date":"05.10","wrk":"hát","weight":"200","creatine":"false","stretch":"false","jumbo":"true","protein":"false","cvitamin":"false","sleep":"4"}
+,{"date":"05.10","wrk":"láb","weight":"200","creatine":"false","stretch":"false","jumbo":"true","protein":"false","cvitamin":"false","sleep":"4"}
+,{"date":"05.10","wrk":"hát","weight":"200","creatine":"false","stretch":"false","jumbo":"true","protein":"false","cvitamin":"false","sleep":"4"}
+,{"date":"05.11","wrk":"mell","weight":"0","creatine":"false","stretch":"false","jumbo":"false","protein":"false","cvitamin":"false","sleep":"5"}
+,{"date":"05.11","wrk":"mell","weight":"20","creatine":"false","stretch":"false","jumbo":"false","protein":"false","cvitamin":"false","sleep":"0"}
 ] 
