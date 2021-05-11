@@ -7,9 +7,14 @@
     <groupId>hu.unideb.inf</groupId>
     <artifactId>gym-project-FX</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <scm>
+        <developerConnection>scm:git:https://github.com/olaszzs/gym-project-FX.git</developerConnection>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
         <maven.compiler.release>15</maven.compiler.release>
         <exec.mainClass>application.Main</exec.mainClass>
         <tinylog.version>2.2.1</tinylog.version>
@@ -21,6 +26,8 @@
             <id>olaszzs</id>
             <name>Zsolt Olasz</name>
             <email>olaszzs@mailbox.unideb.hu</email>
+            <organization>Faculty of Informatics, University of Debrecen</organization>
+            <organizationUrl>https://inf.unideb.hu/</organizationUrl>
         </developer>
     </developers>
 
