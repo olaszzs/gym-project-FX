@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -14,7 +15,8 @@ public class DayRepo {
     public List<Day> days;
 
     public DayRepo() throws IOException{
-        loadDays(DayRepo.class.getClassLoader().getResourceAsStream("days.json"));
+        //loadDays(DayRepo.class.getClassLoader().getResourceAsStream("days.json"));
+        days = OBJECT_MAPPER.readValue(new File("src/main/resources/days.json"), new TypeReference<>() {});
     }
 
     public void loadDays(InputStream is) throws IOException{

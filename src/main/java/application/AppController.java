@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 public class AppController implements Initializable{
 
-    List<Day> days = new DayRepo().getAll();
+    //List<Day> days = new DayRepo().getAll();
 
     @FXML
     private GridPane grdpn;
@@ -100,7 +100,7 @@ public class AppController implements Initializable{
      */
     @FXML
     @SneakyThrows
-    private void onSave(ActionEvent event) {
+    private void onSave() {
         final var days = new DayRepo().getAll();
 
         //TODO több kattintásra több értéket tudjak beírni, így egy nap tudjam megadni az előzőt is akár
@@ -115,10 +115,11 @@ public class AppController implements Initializable{
                         creatineCheckBox.isSelected(), stretchCheckBox.isSelected(), jumboCheckBox.isSelected(),
                         proteinCheckBox.isSelected(), cVitaminCheckBox.isSelected(), (Integer) sleepSpinner.getValue());
 
-                //days.add(nap);
+                days.add(nap);
 
                 arr.add(nap);
                 file.write(arr.toJSONString()+" \n");
+
 
                 file.flush();
                 file.close();
@@ -134,7 +135,7 @@ public class AppController implements Initializable{
                     Hibás dátum
                     Várt formátum: hó.nap""");
             Stage stage = (Stage) error.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/error.png"));
+            stage.getIcons().add(new Image("src/main/resources/error.png"));
             error.showAndWait();
         }
     }
@@ -146,6 +147,7 @@ public class AppController implements Initializable{
      */
     @FXML
     public void avgWeight() throws IOException {
+        final var days = new DayRepo().getAll();
 
         if(days.isEmpty()){
             Alert error = new Alert(Alert.AlertType.ERROR);
@@ -174,8 +176,14 @@ public class AppController implements Initializable{
         }
     }
 
+    /**
+     *
+     * @throws IOException
+     */
     @FXML
     public void lessTrained() throws  IOException{
+        final var days = new DayRepo().getAll();
+
         String tmp;
         int hát = 0;
         int váll = 0;
