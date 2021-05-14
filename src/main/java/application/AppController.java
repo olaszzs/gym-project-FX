@@ -184,23 +184,18 @@ public class AppController implements Initializable{
     public void lessTrained() throws  IOException{
         final var days = new DayRepo().getAll();
 
-        String tmp;
-        int hát = 0;
-        int váll = 0;
-        int kar = 0;
-        int láb = 0;
-        int mell = 0;
-        List<Day> dayList = new ArrayList<Day>();
-        /*days.stream()
-                .map(Day::getWrk)
-                .sorted()
-                .forEach(System.out::println);*/
+        Map<String, Long> count = days.stream()
+                .collect(Collectors.groupingBy(day -> day.getWrk(), Collectors.counting()));
 
-        Map<String, Long> countMap = days.stream()
-                .map(Day::getWrk)
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        final var result = (count.entrySet().stream().min(Map.Entry.comparingByValue()).get().getKey()).toUpperCase();
 
-
+        Alert avgW = new Alert(Alert.AlertType.INFORMATION);
+        avgW.setTitle("Lemaradás");
+        avgW.setHeaderText(null);
+        avgW.setContentText("Legkevesebbszer megedzett izomcsoport az eddig vezetett napok alapján: " + result );
+        Stage stage = (Stage) avgW.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("/biceps.png"));
+        avgW.showAndWait();
     }
 
 }
