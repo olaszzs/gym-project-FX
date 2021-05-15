@@ -20,7 +20,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -81,12 +80,7 @@ public class AppController implements Initializable{
         Alert about = new Alert(Alert.AlertType.INFORMATION);
         about.setTitle("Info");
         about.setHeaderText("Edzős program");
-        about.setContentText("""
-            Java version: %s, %s
-            JavaFX version: %s
-            Created by: Zsolt Olasz
-            2021.02.25
-            """.formatted(System.getProperty("java.version"), System.getProperty("java.vendor"), System.getProperty("javafx.version")));
+        about.setContentText("Java version: %s, %s\n JavaFX version: %s\n Created by: Zsolt Olasz\n 2021.02.25\n ".formatted(System.getProperty("java.version"), System.getProperty("java.vendor"), System.getProperty("javafx.version")));
         Stage stage = (Stage) about.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image("/info.png"));
         about.showAndWait();
@@ -103,7 +97,6 @@ public class AppController implements Initializable{
     private void onSave() {
         final var days = new DayRepo().getAll();
 
-        //TODO több kattintásra több értéket tudjak beírni, így egy nap tudjam megadni az előzőt is akár
         JSONArray arr = new JSONArray();
         arr.addAll(days);
 
@@ -131,9 +124,7 @@ public class AppController implements Initializable{
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setTitle("Hiba");
             error.setHeaderText(null);
-            error.setContentText("""
-                    Hibás dátum
-                    Várt formátum: hó.nap""");
+            error.setContentText("Hibás dátum. Várt formátum: hó.nap");
             Stage stage = (Stage) error.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("src/main/resources/error.png"));
             error.showAndWait();
@@ -150,13 +141,7 @@ public class AppController implements Initializable{
         final var days = new DayRepo().getAll();
 
         if(days.isEmpty()){
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle("Hiba");
-            error.setHeaderText(null);
-            error.setContentText("Nincs tárolt adat!");
-            Stage stage = (Stage) error.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/error.png"));
-            error.showAndWait();
+            error();
         }
         else {
             final var result = days.stream()
@@ -167,9 +152,7 @@ public class AppController implements Initializable{
             Alert avgW = new Alert(Alert.AlertType.INFORMATION);
             avgW.setTitle("Átlag testtömeg");
             avgW.setHeaderText(null);
-            avgW.setContentText("""
-                    Az átlag testtömeged az eddig vezetett napok alapján: 
-                    """ + result + " kg");
+            avgW.setContentText("Az átlag testtömeged az eddig vezetett napok alapján: \n"+ result + " kg");
             Stage stage = (Stage) avgW.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/biceps.png"));
             avgW.showAndWait();
@@ -177,25 +160,46 @@ public class AppController implements Initializable{
     }
 
     /**
-     *
+     * Method for average weight button.
+     * There is an error handling, if there is no data in the file, give an error message instead of crashing the program.
+     * But if there is data in the file, perform the task.
      * @throws IOException
      */
     @FXML
     public void lessTrained() throws  IOException{
         final var days = new DayRepo().getAll();
 
-        Map<String, Long> count = days.stream()
-                .collect(Collectors.groupingBy(day -> day.getWrk(), Collectors.counting()));
+        if(days.isEmpty()){
+            error();
+        }
+        else {
 
-        final var result = (count.entrySet().stream().min(Map.Entry.comparingByValue()).get().getKey()).toUpperCase();
+            Map<String, Long> count = days.stream()
+                    .collect(Collectors.groupingBy(day -> day.getWrk(), Collectors.counting()));
 
-        Alert avgW = new Alert(Alert.AlertType.INFORMATION);
-        avgW.setTitle("Lemaradás");
-        avgW.setHeaderText(null);
-        avgW.setContentText("Legkevesebbszer megedzett izomcsoport az eddig vezetett napok alapján: " + result );
-        Stage stage = (Stage) avgW.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image("/biceps.png"));
-        avgW.showAndWait();
+            final var result = (count.entrySet().stream().min(Map.Entry.comparingByValue()).get().getKey()).toUpperCase();
+
+            Alert lessT = new Alert(Alert.AlertType.INFORMATION);
+            lessT.setTitle("Lemaradás");
+            lessT.setHeaderText(null);
+            lessT.setContentText("Legkevesebbszer megedzett izomcsoport az eddig vezetett napok alapján: " + result);
+            Stage stage = (Stage) lessT.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/biceps.png"));
+            lessT.showAndWait();
+        }
+    }
+
+    /**
+     * Void method for error Alert.
+     */
+    public void error() {
+        Alert error = new Alert(Alert.AlertType.ERROR);
+        error.setTitle("Hiba");
+        error.setHeaderText(null);
+        error.setContentText("Nincs tárolt adat!");
+        Stage stage = (Stage) error.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("/error.png"));
+        error.showAndWait();
     }
 
 }

@@ -10,6 +10,9 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
+/**
+ * Java class that creates the main scene for the application.
+ */
 public class App extends Application {
 
     @Override

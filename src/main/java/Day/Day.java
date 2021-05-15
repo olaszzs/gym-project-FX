@@ -7,30 +7,50 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 
+/**
+ * Using Lombok annotations for day class.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-/**
- * @param date means the date you want to write about
- * @param wrk means the trained muscle group
- * @param weight means your weight this day
- * @param creatine means drank creatine this day or not
- * @param stretch means stretched your muscles or not
- * @param jumbo means drank jumbo mass gainer this day or not
- * @param protein means drank protein shake this day or not
- * @param cvitamin means get daily c-vitamin dose this day or not
- * @param sleep means the hours you slept this day
- */
 public class Day {
+    /**
+     * means the date you want to write about.
+     */
     String date;
-    String wrk;         //the trained muscle group
+    /**
+     * means the trained muscle group.
+     */
+    String wrk;
+    /**
+     * means your weight this day.
+     */
     int weight;
+    /**
+     * means drank creatine this day or not.
+     */
     boolean creatine;
+    /**
+     * means stretched your muscles or not.
+     */
     boolean stretch;
-    boolean jumbo;      //used jumbo as a mass gainer
-    boolean protein;    //used extra protein as a shake
+    /**
+     * means drank jumbo mass gainer this day or not.
+     */
+    boolean jumbo;
+    /**
+     * means drank protein shake this day or not.
+     */
+    boolean protein;
+    /**
+     * means get daily c-vitamin dose this day or not.
+     */
     boolean cvitamin;
+    /**
+     * means the hours you slept this day.
+     */
     int sleep;
 
     /**
@@ -49,5 +69,27 @@ public class Day {
                 ",\"cvitamin\":" + '\"' + cvitamin + '\"' +
                 ",\"sleep\":" + '\"' + sleep + '\"'+
                 "}\n";
+    }
+
+    /**
+     *
+     * @param o means the object.
+     * @return that the two objects are equals or not.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Day day = (Day) o;
+        return Objects.equals(date, day.date);
+    }
+
+    /**
+     *
+     * @return a hash code value for the date.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(date);
     }
 }
