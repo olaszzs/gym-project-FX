@@ -181,8 +181,4 @@ nbdist/
 .nb-gradle/
 
 
-target/
-.idea
-dependency-reduced-pom.xml
-
 # End of https://www.toptal.com/developers/gitignore/api/maven,intellij+all,eclipse,netbeans
