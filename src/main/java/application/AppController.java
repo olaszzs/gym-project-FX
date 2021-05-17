@@ -80,7 +80,7 @@ public class AppController implements Initializable{
         Alert about = new Alert(Alert.AlertType.INFORMATION);
         about.setTitle("Info");
         about.setHeaderText("Edzős program");
-        about.setContentText("Java version: %s, %s\n JavaFX version: %s\n Created by: Zsolt Olasz\n 2021.02.25\n ".formatted(System.getProperty("java.version"), System.getProperty("java.vendor"), System.getProperty("javafx.version")));
+        about.setContentText("Java version: %s, %s\nJavaFX version: %s\nCreated by: Zsolt Olasz\n2021.05.17\n ".formatted(System.getProperty("java.version"), System.getProperty("java.vendor"), System.getProperty("javafx.version")));
         Stage stage = (Stage) about.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image("/info.png"));
         about.showAndWait();

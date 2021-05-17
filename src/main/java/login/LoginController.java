@@ -1,5 +1,6 @@
 package login;
 
+import application.App;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import lombok.extern.java.Log;
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 
@@ -35,6 +38,16 @@ public class LoginController {
             mainStage.setResizable(false);
             mainStage.getIcons().add(new Image("/gym.png"));
             mainStage.show();
+
+        }
+        else if(unField.getText().isEmpty() || pwField.getText().isEmpty()){
+            Alert emptyError = new Alert(Alert.AlertType.ERROR);
+            emptyError.setTitle("Hiba");
+            emptyError.setHeaderText(null);
+            emptyError.setContentText("Töltsd ki mindkét mezőt!");
+            Stage stage = (Stage) emptyError.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/error.png"));
+            emptyError.showAndWait();
         }
         else{
             Alert loginError = new Alert(Alert.AlertType.ERROR);
