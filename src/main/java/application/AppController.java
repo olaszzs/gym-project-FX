@@ -3,7 +3,8 @@ package application;
 import Day.Day;
 import Day.DayRepo;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -11,11 +12,13 @@ import javafx.scene.layout.GridPane;
 import javafx.fxml.Initializable;
 
 
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import org.json.simple.JSONArray;
 import org.tinylog.Logger;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +29,8 @@ import java.util.stream.Collectors;
 public class AppController implements Initializable{
 
     //List<Day> days = new DayRepo().getAll();
+
+    ObservableList<String> sexChoiceList = FXCollections.observableArrayList("Férfi", "Nő");
 
     @FXML
     private GridPane grdpn;
@@ -48,8 +53,16 @@ public class AppController implements Initializable{
     @FXML
     private Spinner<Integer> sleepSpinner;
     SpinnerValueFactory<Integer> svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,24,0);
+    @FXML
+    private ChoiceBox<String> sexChoiceBox ;
+    @FXML
+    private TextField heightField;
+    @FXML
+    private TextField ageField;
 
-    public AppController() throws IOException {
+    File mainFile;
+
+    public AppController()  {
     }
 
     /**
@@ -61,6 +74,7 @@ public class AppController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb){
         sleepSpinner.setValueFactory(svf);
+        sexChoiceBox.getItems().addAll(sexChoiceList);
     }
 
     /**
@@ -95,39 +109,65 @@ public class AppController implements Initializable{
     @FXML
     @SneakyThrows
     private void onSave() {
-        final var days = new DayRepo().getAll();
+        if(this.mainFile == null)
+            error();
 
-        JSONArray arr = new JSONArray();
-        arr.addAll(days);
+        else {
+            final var days = new DayRepo(mainFile.getPath()).getAll();
 
-        //date format error
-        if(dateField.getText().length() <= 6 && dateField.getText().length() >= 5){
-            try(FileWriter file = new FileWriter("src/main/resources/days.json", false)){
+            JSONArray arr = new JSONArray();
+            arr.addAll(days);
 
-                Day nap = new Day(dateField.getText(), wrkField.getText(), Integer.parseInt(weightField.getText()),
-                        creatineCheckBox.isSelected(), stretchCheckBox.isSelected(), jumboCheckBox.isSelected(),
-                        proteinCheckBox.isSelected(), cVitaminCheckBox.isSelected(), (Integer) sleepSpinner.getValue());
+            //date format error
+            if (dateField.getText().length() <= 6 && dateField.getText().length() >= 5) {
+                try (FileWriter file = new FileWriter(mainFile.getPath(), false)) {
 
-                days.add(nap);
+                    Day nap = new Day(dateField.getText(), wrkField.getText(), Integer.parseInt(weightField.getText()),
+                            creatineCheckBox.isSelected(), stretchCheckBox.isSelected(), jumboCheckBox.isSelected(),
+                            proteinCheckBox.isSelected(), cVitaminCheckBox.isSelected(), (Integer) sleepSpinner.getValue());
 
-                arr.add(nap);
-                file.write(arr.toJSONString()+" \n");
+                    days.add(nap);
+
+                    arr.add(nap);
+                    file.write(arr.toJSONString() + " \n");
 
 
-                file.flush();
-                file.close();
-            }catch(IOException err){
-                Logger.error(err);  //Logging error with Tinylog
+                    file.flush();
+                    file.close();
+                } catch (IOException err) {
+                    Logger.error(err);  //Logging error with Tinylog
+                }
+            } else {
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Hiba");
+                error.setHeaderText(null);
+                error.setContentText("Hibás dátum. Várt formátum: hó.nap");
+                Stage stage = (Stage) error.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("src/main/resources/error.png"));
+                error.showAndWait();
             }
         }
-        else{
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle("Hiba");
-            error.setHeaderText(null);
-            error.setContentText("Hibás dátum. Várt formátum: hó.nap");
-            Stage stage = (Stage) error.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("src/main/resources/error.png"));
-            error.showAndWait();
+    }
+
+    @FXML
+    private void onOpen() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open");
+        File file = fileChooser.showOpenDialog(null);
+        mainFile = file;
+        if (file != null) {
+            Logger.debug("Opening file {}", file);
+            try {
+                DayRepo asd = new DayRepo(file.getPath());
+            } catch (IOException e) {
+                Logger.error("Failed to open file");
+            }
+        }
+        if(mainFile.length() == 0) {
+            System.out.println("asd");
+            FileWriter start = new FileWriter(mainFile.getPath());
+            start.write("[]");
+            start.close();
         }
     }
 
@@ -138,25 +178,25 @@ public class AppController implements Initializable{
      */
     @FXML
     public void avgWeight() throws IOException {
-        final var days = new DayRepo().getAll();
-
-        if(days.isEmpty()){
+        if(this.mainFile == null)
             error();
-        }
-        else {
-            final var result = days.stream()
-                    .mapToDouble(day -> day.getWeight())
-                    .average()
-                    .getAsDouble();
+        else{
+            final var days = new DayRepo(mainFile.getPath()).getAll();
 
-            Alert avgW = new Alert(Alert.AlertType.INFORMATION);
-            avgW.setTitle("Átlag testtömeg");
-            avgW.setHeaderText(null);
-            avgW.setContentText("Az átlag testtömeged az eddig vezetett napok alapján: \n"+ result + " kg");
-            Stage stage = (Stage) avgW.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/biceps.png"));
-            avgW.showAndWait();
-        }
+                final var result = days.stream()
+                        .mapToDouble(day -> day.getWeight())
+                        .average()
+                        .getAsDouble();
+
+                Alert avgW = new Alert(Alert.AlertType.INFORMATION);
+                avgW.setTitle("Átlag testtömeg");
+                avgW.setHeaderText(null);
+                avgW.setContentText("Az átlag testtömeged az eddig vezetett napok alapján: \n"+ result + " kg");
+                Stage stage = (Stage) avgW.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("/biceps.png"));
+                avgW.showAndWait();
+            }
+
     }
 
     /**
@@ -167,26 +207,52 @@ public class AppController implements Initializable{
      */
     @FXML
     public void lessTrained() throws  IOException{
-        final var days = new DayRepo().getAll();
-
-        if(days.isEmpty()){
+        if(this.mainFile == null)
             error();
+
+        else{
+            final var days = new DayRepo(mainFile.getPath()).getAll();
+
+            if(days.isEmpty()){
+                error();
+            }
+            else {
+
+                Map<String, Long> count = days.stream()
+                        .collect(Collectors.groupingBy(day -> day.getWrk(), Collectors.counting()));
+
+                final var result = (count.entrySet().stream().min(Map.Entry.comparingByValue()).get().getKey()).toUpperCase();
+
+                Alert lessT = new Alert(Alert.AlertType.INFORMATION);
+                lessT.setTitle("Lemaradás");
+                lessT.setHeaderText(null);
+                lessT.setContentText("Legkevesebbszer megedzett izomcsoport az eddig vezetett napok alapján: " + result);
+                Stage stage = (Stage) lessT.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("/biceps.png"));
+                lessT.showAndWait();
+            }
         }
-        else {
+    }
 
-            Map<String, Long> count = days.stream()
-                    .collect(Collectors.groupingBy(day -> day.getWrk(), Collectors.counting()));
+    /**
+     * Method for counting BMI and BMR values.
+     */
+    @FXML
+    private void onCount(){
+        double height = Double.parseDouble(heightField.getText());
+        int weight = Integer.parseInt(weightField.getText());
+        String sex = sexChoiceBox.getValue();
+        int age = Integer.parseInt(ageField.getText());
+        double bmi = Counter.bmiCount(height, weight);
+        double bmr = Counter.bmrCount(height, weight, sex, age);
 
-            final var result = (count.entrySet().stream().min(Map.Entry.comparingByValue()).get().getKey()).toUpperCase();
-
-            Alert lessT = new Alert(Alert.AlertType.INFORMATION);
-            lessT.setTitle("Lemaradás");
-            lessT.setHeaderText(null);
-            lessT.setContentText("Legkevesebbszer megedzett izomcsoport az eddig vezetett napok alapján: " + result);
-            Stage stage = (Stage) lessT.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/biceps.png"));
-            lessT.showAndWait();
-        }
+        Alert counter = new Alert(Alert.AlertType.INFORMATION);
+        counter.setTitle("BMI / BMR");
+        counter.setHeaderText(null);
+        counter.setContentText("BMI értéked: "+bmi+"\nBMR értéked:"+bmr+" kcal");
+        Stage stage = (Stage) counter.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("/biceps.png"));
+        counter.showAndWait();
     }
 
     /**

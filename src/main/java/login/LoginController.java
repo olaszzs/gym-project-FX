@@ -1,6 +1,5 @@
 package login;
 
-import application.App;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,8 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import lombok.extern.java.Log;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 
