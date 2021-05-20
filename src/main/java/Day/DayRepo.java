@@ -6,7 +6,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -22,19 +21,11 @@ public class DayRepo {
 
     /**
      *
+     * @param path is the path to our file.
      * @throws IOException
      */
     public DayRepo(String path) throws IOException{
         days = OBJECT_MAPPER.readValue(new File(path), new TypeReference<>() {});
-    }
-
-    /*public DayRepo(String path) throws IOException {
-        loadDays(DayRepo.class.getClassLoader().getResourceAsStream());
-    }*/
-
-    private void loadDays(InputStream is) throws IOException {
-        days = OBJECT_MAPPER.readValue(is, new TypeReference<>() {
-        });
     }
 
     /**

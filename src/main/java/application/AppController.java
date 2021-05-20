@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,6 +62,7 @@ public class AppController implements Initializable{
     private TextField ageField;
 
     File mainFile;
+    DecimalFormat df2 = new DecimalFormat("#.##");
 
     public AppController()  {
     }
@@ -181,22 +183,16 @@ public class AppController implements Initializable{
         if(this.mainFile == null)
             error();
         else{
-            final var days = new DayRepo(mainFile.getPath()).getAll();
+            double avg = Counter.avgWeight(mainFile);
 
-                final var result = days.stream()
-                        .mapToDouble(day -> day.getWeight())
-                        .average()
-                        .getAsDouble();
-
-                Alert avgW = new Alert(Alert.AlertType.INFORMATION);
-                avgW.setTitle("Átlag testtömeg");
-                avgW.setHeaderText(null);
-                avgW.setContentText("Az átlag testtömeged az eddig vezetett napok alapján: \n"+ result + " kg");
-                Stage stage = (Stage) avgW.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("/biceps.png"));
-                avgW.showAndWait();
+            Alert avgW = new Alert(Alert.AlertType.INFORMATION);
+            avgW.setTitle("Átlag testtömeg");
+            avgW.setHeaderText(null);
+            avgW.setContentText("Az átlag testtömeged az eddig vezetett napok alapján: \n"+ df2.format(avg) + " kg");
+            Stage stage = (Stage) avgW.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/biceps.png"));
+            avgW.showAndWait();
             }
-
     }
 
     /**
@@ -239,26 +235,38 @@ public class AppController implements Initializable{
      */
     @FXML
     private void onCount(){
-        double height = Double.parseDouble(heightField.getText());
-        int weight = Integer.parseInt(weightField.getText());
-        String sex = sexChoiceBox.getValue();
-        int age = Integer.parseInt(ageField.getText());
-        double bmi = Counter.bmiCount(height, weight);
-        double bmr = Counter.bmrCount(height, weight, sex, age);
+        if(heightField.getText().isEmpty() || weightField.getText().isEmpty() || ageField.getText().isEmpty() || sexChoiceBox.getValue().isEmpty()) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Hiba");
+            error.setHeaderText(null);
+            error.setContentText("Töltse ki az összes mezőt!");
+            Stage stage = (Stage) error.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/error.png"));
+            error.showAndWait();
+        }
+        else {
 
-        Alert counter = new Alert(Alert.AlertType.INFORMATION);
-        counter.setTitle("BMI / BMR");
-        counter.setHeaderText(null);
-        counter.setContentText("BMI értéked: "+bmi+"\nBMR értéked:"+bmr+" kcal");
-        Stage stage = (Stage) counter.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image("/biceps.png"));
-        counter.showAndWait();
+            double height = Double.parseDouble(heightField.getText());
+            int weight = Integer.parseInt(weightField.getText());
+            String sex = sexChoiceBox.getValue();
+            int age = Integer.parseInt(ageField.getText());
+            double bmi = Counter.bmiCount(height, weight);
+            double bmr = Counter.bmrCount(height, weight, sex, age);
+
+            Alert counter = new Alert(Alert.AlertType.INFORMATION);
+            counter.setTitle("BMI / BMR");
+            counter.setHeaderText(null);
+            counter.setContentText("BMI értéked: " + df2.format(bmi) + "\nBMR értéked: " + df2.format(bmr) + " kcal");
+            Stage stage = (Stage) counter.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/biceps.png"));
+            counter.showAndWait();
+        }
     }
 
     /**
      * Void method for error Alert.
      */
-    public void error() {
+    public static void error() {
         Alert error = new Alert(Alert.AlertType.ERROR);
         error.setTitle("Hiba");
         error.setHeaderText(null);
