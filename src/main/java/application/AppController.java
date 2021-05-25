@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import lombok.Data;
 import lombok.SneakyThrows;
 import org.json.simple.JSONArray;
 import org.tinylog.Logger;
@@ -26,10 +27,8 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@Data
 public class AppController implements Initializable{
-
-    //List<Day> days = new DayRepo().getAll();
 
     ObservableList<String> sexChoiceList = FXCollections.observableArrayList("Férfi", "Nő");
 
@@ -98,7 +97,7 @@ public class AppController implements Initializable{
         about.setHeaderText("Edzős program");
         about.setContentText("Java version: %s, %s\nJavaFX version: %s\nCreated by: Zsolt Olasz\n2021.05.17\n ".formatted(System.getProperty("java.version"), System.getProperty("java.vendor"), System.getProperty("javafx.version")));
         Stage stage = (Stage) about.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image("/info.png"));
+        stage.getIcons().add(new Image(getClass().getResource("/info.png").toString()));
         about.showAndWait();
     }
 
@@ -145,7 +144,7 @@ public class AppController implements Initializable{
                 error.setHeaderText(null);
                 error.setContentText("Hibás dátum. Várt formátum: hó.nap");
                 Stage stage = (Stage) error.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("src/main/resources/error.png"));
+                stage.getIcons().add(new Image(getClass().getResource("/error.png").toString()));
                 error.showAndWait();
             }
         }
@@ -190,7 +189,7 @@ public class AppController implements Initializable{
             avgW.setHeaderText(null);
             avgW.setContentText("Az átlag testtömeged az eddig vezetett napok alapján: \n"+ df2.format(avg) + " kg");
             Stage stage = (Stage) avgW.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/biceps.png"));
+            stage.getIcons().add(new Image(getClass().getResource("/biceps.png").toString()));
             avgW.showAndWait();
             }
     }
@@ -224,7 +223,7 @@ public class AppController implements Initializable{
                 lessT.setHeaderText(null);
                 lessT.setContentText("Legkevesebbszer megedzett izomcsoport az eddig vezetett napok alapján: " + result);
                 Stage stage = (Stage) lessT.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("/biceps.png"));
+                stage.getIcons().add(new Image(getClass().getResource("/biceps.png").toString()));
                 lessT.showAndWait();
             }
         }
@@ -241,7 +240,7 @@ public class AppController implements Initializable{
             error.setHeaderText(null);
             error.setContentText("Töltse ki az összes mezőt!");
             Stage stage = (Stage) error.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/error.png"));
+            stage.getIcons().add(new Image(getClass().getResource("/error.png").toString()));
             error.showAndWait();
         }
         else {
@@ -258,7 +257,7 @@ public class AppController implements Initializable{
             counter.setHeaderText(null);
             counter.setContentText("BMI értéked: " + df2.format(bmi) + "\nBMR értéked: " + df2.format(bmr) + " kcal");
             Stage stage = (Stage) counter.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/biceps.png"));
+            stage.getIcons().add(new Image(getClass().getResource("/biceps.png").toString()));
             counter.showAndWait();
         }
     }
@@ -276,4 +275,16 @@ public class AppController implements Initializable{
         error.showAndWait();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AppController that = (AppController) o;
+        return Objects.equals(mainFile, that.mainFile);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mainFile);
+    }
 }

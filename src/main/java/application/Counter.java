@@ -1,9 +1,6 @@
 package application;
 
 import Day.DayRepo;
-import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import lombok.Data;
 
 import java.io.File;

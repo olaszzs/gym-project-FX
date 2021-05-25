@@ -21,6 +21,7 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
+
     /**
      * Method for log in, open the main stage or handle errors with an error message.
      * @throws IOException we need this because FXMLLoader.load might give an exception
@@ -33,7 +34,7 @@ public class LoginController {
             Scene scene = new Scene(root);
             mainStage.setScene(scene);
             mainStage.setResizable(false);
-            mainStage.getIcons().add(new Image("/gym.png"));
+            mainStage.getIcons().add(new Image(getClass().getResource("/gym.png").toString()));
             mainStage.show();
 
         }
@@ -43,7 +44,7 @@ public class LoginController {
             emptyError.setHeaderText(null);
             emptyError.setContentText("Töltsd ki mindkét mezőt!");
             Stage stage = (Stage) emptyError.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/error.png"));
+            stage.getIcons().add(new Image(getClass().getResource("/error.png").toString()));
             emptyError.showAndWait();
         }
         else{
@@ -52,7 +53,7 @@ public class LoginController {
             loginError.setHeaderText(null);
             loginError.setContentText("Hibás felhasználónév vagy jelszó!");
             Stage stage = (Stage) loginError.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/error.png"));
+            stage.getIcons().add(new Image(getClass().getResource("/error.png").toString()));
             loginError.showAndWait();
         }
     }
